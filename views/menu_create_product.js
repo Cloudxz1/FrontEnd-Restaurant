@@ -45,13 +45,13 @@ const CreateProduct = () => {
             <TextInput placeholder="enter the price" style = {styles.input} value ={productPrice} onChangeText = {(value) => setproductPrice(value)} mode="outlined" keyboardType="numeric"/>
             <TextInput placeholder="enter the stock" style = {styles.input} value ={productStock} onChangeText = {(value) => setproductStock(value)} mode="outlined"/>
             <TextInput placeholder="enter the description" style = {styles.input} value ={productDescription} onChangeText = {(value) => setproductDescription(value)} mode="outlined" numberOfLines={5}/>
-            {/* <Picker selectedValue={selectedCategory} onValueChange={(itemValue) =>
+            <Picker selectedValue={selectedCategory} onValueChange={(itemValue) =>
                               setSelectedCategory(itemValue)}>
                 <Picker.Item label="Select a category" value ={categoryName} onChangeText = {(value) => setCategoryName(value)} />
                             {categories.map(categoryName => (
                                 <Picker.Item key={categoryName} label={categoryName} value={categoryName} />
                             ))}
-            </Picker> */}
+            </Picker>
             <Button style = {styles.button1} onPress = {() => createProduct(productId,productName,productPrice,productStock,productDescription,selectedCategory)}>
                 <Text style = {styles.text1}>Add Product</Text>
             </Button>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
 
 });
 
-const createProduct = (Id,Name,Price,Stock,Description) => {
+const createProduct = (Id,Name,Price,Stock,Description,category) => {
     fetch('http://192.168.1.163:8000/crearProducto', {
       method: 'POST',
       headers: {
@@ -110,7 +110,8 @@ const createProduct = (Id,Name,Price,Stock,Description) => {
         "nombre": Name,
         "precio": Price,
         "stock": Stock,
-        "descripcion": Description})
+        "descripcion": Description,
+        "categoria": category})
     })
     .then(res => {
       console.log(res.status);
@@ -122,10 +123,10 @@ const createProduct = (Id,Name,Price,Stock,Description) => {
       var result1 = result;
 
       if(result1.toString(result) === "ok"){
-        Alert.alert("Success","Se ha agregado la categoria");
+        Alert.alert("Success","Se ha agregado el producto");
       }else{
         Alert.alert("Error",
-                "La categoria ya existe dentro de la base de datos"
+                "El producto ya existe dentro de la base de datos"
                 );
       }
     })
