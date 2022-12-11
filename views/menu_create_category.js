@@ -12,7 +12,7 @@ const CreateCategory = () =>{
         <View style = {styles.container}>
             <Text style={styles.text}>CRUD Categoria</Text>
             <TextInput placeholder="Ingrese el nombre de la categoria" style = {styles.input} value ={nombreCat} onChangeText = {(value) => setNombreCat(value)} mode="outlined"/>
-            <Button style = {styles.button1} onPress = {() => createCategory1(nombreCat)}>
+            <Button style = {styles.button1} onPress = {() => createCategory(nombreCat)}>
                 <Text style = {styles.text1}>Add Category</Text>
             </Button>
             <Button style = {styles.button2} value ={nombreCat} onChangeText = {(value) => setNombreCat(value)} onPress = {() => deleteCategory(nombreCat)}>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 
 });
 
-let createCategory1 = (name) =>{
+let createCategory = (name) =>{
 
     fetch('http://192.168.1.163:8000/crearCategoria', {
       method: 'POST',

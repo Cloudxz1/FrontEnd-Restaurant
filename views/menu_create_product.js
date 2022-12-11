@@ -12,8 +12,6 @@ const CreateProduct = () => {
     const [productPrice, setproductPrice] = useState("");
     const [productStock, setproductStock] = useState("");
     const [productImage, setproductImage] = useState("");
-    const [categories,setCategories] = ([]);
-    const [categoryId,setCategoryId] = ("");
 
 
     useEffect(() => {
@@ -42,7 +40,7 @@ const CreateProduct = () => {
     }
     return(
         <View style = {styles.container}>
-            {/* <Text style={styles.text}>CRUD Products</Text>
+            <Text style={styles.text}>CRUD Products</Text>
             <TextInput placeholder="Ingrese el nombre de la categoria" style = {styles.input} value ={nombreCat} onChangeText = {(value) => setNombreCat(value)} mode="outlined"/>
             <Button style = {styles.button1} onPress = {() => createProduct(nombreCat)}>
                 <Text style = {styles.text1}>Add Product</Text>
@@ -52,13 +50,7 @@ const CreateProduct = () => {
             </Button>
             <Button style = {styles.button3} onPress = {() => navegation.navigate('EditProduct')}>
               <Text style={styles.text1}>Edit Product</Text>
-            </Button> */}
-            <Picker selectedValue={categoryId} onValueChange={categoryId => obtenerCategoria(categoryId)}>
-                        <Picker.Item label="- Select -" value="" />
-                        {categories.map(categoryId => (
-                            <Picker.Item key={categoryId.id} label={categoryId.nombre} value={categoryId.id} />
-                        ))}
-            </Picker>
+            </Button>
         </View>
     )
 

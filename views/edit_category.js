@@ -4,35 +4,44 @@ import { View,StyleSheet} from 'react-native'
 import {Button,TextInput,Text, IconButton} from 'react-native-paper'
 import axios from 'axios'
 
+
 const EditCategory = () =>{
 
     const url = "http://192.168.1.163:8000/getCategoria";
     const [categories,setCategories] = useState([]);
-    const [nombreCat,setnombreCat] = useState("");
+    const [categoryName, setCategoryName] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState();
 
-    const obtainCategory = async () => {
 
-      try {
-          const {data} = await axios.get(url);
-          const {categories} = data;
-          setCategories(categories);
-          
-      } catch (error) {
-          console.log(error)
-      }
-
-    }
+    
     useEffect(() => {
-      obtainCategory();
+      getCategory();
+      // obtainCategory();
     }, []);
 
+
+    const getCategory = async () => {
+      const response = await axios
+        .get(`http://192.168.1.163:8000/getCategoria`)
+        .then(res => {
+          setCategories(res.data);
+          setCategoryName(res.data);
+          console.log(res.data)
+        })
+        .catch(error => console.log(error));
+    };
+
+    const obtainCategory = categoryName =>{
+      setCategories(categoryName)
+    }
     return(
         <View style = {styles.container}>
             <Text style={styles.text} variant ="titleMedium">Edit Category</Text>
-            <Picker selectedValue={nombreCat} onValueChange={obtainCategory()}>
-                        <Picker.Item label="- Select -" value="" />
-                        {categories.map(nombreCat => (
-                            <Picker.Item key={nombreCat.id} label={nombreCat.nombre} value={nombreCat.nombre} />
+            <Picker selectedValue={selectedCategory} onValueChange={(itemValue) =>
+                              setSelectedCategory(itemValue)}>
+                        <Picker.Item label="Select a category" value ={categoryName} onChangeText = {(value) => setCategoryName(value)} />
+                        {categories.map(categoryName => (
+                            <Picker.Item key={categoryName} label={categoryName} value={categoryName} />
                         ))}
             </Picker>
         </View>
@@ -64,11 +73,40 @@ const styles = StyleSheet.create({
     text1:{
       color:'#FFFFFF'
     },
-    buttonBack:{
-
-    }
-
-
+    dropdown: {
+      height: 50,
+      borderColor: '#000000',
+      borderWidth: 0.5,
+      borderRadius: 8,
+      paddingHorizontal: 8,
+      marginBottom: 10,
+    },
+    label: {
+      position: 'absolute',
+      backgroundColor: '#000000',
+      left: 22,
+      top: 8,
+      zIndex: 999,
+      paddingHorizontal: 8,
+      fontSize: 14,
+    },
+    placeholderStyle: {
+      fontSize: 16,
+    },
+    selectedTextStyle: {
+      fontSize: 16,
+    },
+    iconStyle: {
+      width: 20,
+      height: 20,
+    },
+    inputSearchStyle: {
+      height: 40,
+      fontSize: 16,
+    },
+    icon: {
+      marginRight: 5,
+    },
 });
 
 let updateCategory = (name,name1) =>{
