@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { View } from "react-native";
+import { View ,Alert} from "react-native";
 import { TextInput,Text,Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { StyleSheet } from "react-native";
@@ -41,17 +41,17 @@ const CreateProduct = () => {
         <View style = {styles.container}>
             <Text style={styles.text}>Create Product</Text>
             <TextInput placeholder="enter the product id" style = {styles.input} value ={productId} onChangeText = {(value) => setproductId(value)} mode="outlined"/>
-            <TextInput placeholder="enter the name" style = {styles.input} value ={productName} onChangeText = {(value) => setproductName(value)} mode="outlined" keyboardType="numeric"/>
+            <TextInput placeholder="enter the name" style = {styles.input} value ={productName} onChangeText = {(value) => setProductName(value)} mode="outlined"/>
             <TextInput placeholder="enter the price" style = {styles.input} value ={productPrice} onChangeText = {(value) => setproductPrice(value)} mode="outlined" keyboardType="numeric"/>
             <TextInput placeholder="enter the stock" style = {styles.input} value ={productStock} onChangeText = {(value) => setproductStock(value)} mode="outlined"/>
             <TextInput placeholder="enter the description" style = {styles.input} value ={productDescription} onChangeText = {(value) => setproductDescription(value)} mode="outlined" numberOfLines={5}/>
-            <Picker selectedValue={selectedCategory} onValueChange={(itemValue) =>
+            {/* <Picker selectedValue={selectedCategory} onValueChange={(itemValue) =>
                               setSelectedCategory(itemValue)}>
                 <Picker.Item label="Select a category" value ={categoryName} onChangeText = {(value) => setCategoryName(value)} />
                             {categories.map(categoryName => (
                                 <Picker.Item key={categoryName} label={categoryName} value={categoryName} />
                             ))}
-            </Picker>
+            </Picker> */}
             <Button style = {styles.button1} onPress = {() => createProduct(productId,productName,productPrice,productStock,productDescription,selectedCategory)}>
                 <Text style = {styles.text1}>Add Product</Text>
             </Button>
@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
 
 });
 
-const createProduct = (Id,Name,Price,Stock,Description,selectedCategory) => {
-    fetch('http://192.168.1.163:8000/crearCategoria', {
+const createProduct = (Id,Name,Price,Stock,Description) => {
+    fetch('http://192.168.1.163:8000/crearProducto', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
