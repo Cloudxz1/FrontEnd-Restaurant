@@ -3,7 +3,8 @@ import { View } from "react-native";
 import { TextInput,Text,Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { StyleSheet } from "react-native";
-
+import axios from "axios";
+//import { launchImageLibrary } from 'react-native-image-picker'
 const CreateProduct = () => {
 
     const [productId, setproductId] = useState("");
@@ -12,44 +13,47 @@ const CreateProduct = () => {
     const [productPrice, setproductPrice] = useState("");
     const [productStock, setproductStock] = useState("");
     const [productImage, setproductImage] = useState("");
+    const [categories,setCategories] = useState([]);
+    const [categoryName, setCategoryName] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState();
 
 
     useEffect(() => {
-        const obtainCategory = async () => {
+        getCategory();
+      }, []);
 
-            try {
-                const url = 'http://192.168.1.163:8000/getCategoria';
-                fetch(url)
-                    .then(response => response.json())
-                    .then(result => {
-                        setCategories(result)
-                        console.log(result)
-                    })
-                
-            } catch (error) {
-                console.log(error)
-            }
+    const getCategory = async () => {
+    const response = await axios
+        .get(`http://192.168.1.163:8000/getCategoria`)
+        .then(res => {
+        setCategories(res.data);
+        setCategoryName(res.data);
+        console.log(res.data)
+        })
+        .catch(error => console.log(error));
+    };
 
-        }
-        obtainCategory();
-        
-    }, []);
-
-    const obtenerCategoria = categoryId => {
-        setCategories(categoryId)
+    const obtainCategory = categoryName =>{
+    setCategories(categoryName)
     }
+
     return(
         <View style = {styles.container}>
-            <Text style={styles.text}>CRUD Products</Text>
-            <TextInput placeholder="Ingrese el nombre de la categoria" style = {styles.input} value ={nombreCat} onChangeText = {(value) => setNombreCat(value)} mode="outlined"/>
-            <Button style = {styles.button1} onPress = {() => createProduct(nombreCat)}>
+            <Text style={styles.text}>Create Product</Text>
+            <TextInput placeholder="enter the product id" style = {styles.input} value ={productId} onChangeText = {(value) => setproductId(value)} mode="outlined"/>
+            <TextInput placeholder="enter the name" style = {styles.input} value ={productName} onChangeText = {(value) => setproductName(value)} mode="outlined" keyboardType="numeric"/>
+            <TextInput placeholder="enter the price" style = {styles.input} value ={productPrice} onChangeText = {(value) => setproductPrice(value)} mode="outlined" keyboardType="numeric"/>
+            <TextInput placeholder="enter the stock" style = {styles.input} value ={productStock} onChangeText = {(value) => setproductStock(value)} mode="outlined"/>
+            <TextInput placeholder="enter the description" style = {styles.input} value ={productDescription} onChangeText = {(value) => setproductDescription(value)} mode="outlined" numberOfLines={5}/>
+            <Picker selectedValue={selectedCategory} onValueChange={(itemValue) =>
+                              setSelectedCategory(itemValue)}>
+                <Picker.Item label="Select a category" value ={categoryName} onChangeText = {(value) => setCategoryName(value)} />
+                            {categories.map(categoryName => (
+                                <Picker.Item key={categoryName} label={categoryName} value={categoryName} />
+                            ))}
+            </Picker>
+            <Button style = {styles.button1} onPress = {() => createProduct(productId,productName,productPrice,productStock,productDescription,selectedCategory)}>
                 <Text style = {styles.text1}>Add Product</Text>
-            </Button>
-            <Button style = {styles.button2} value ={nombreCat} onChangeText = {(value) => setNombreCat(value)} onPress = {() => deleteProduct(nombreCat)}>
-              <Text style = {styles.text1}>Delete Product</Text>
-            </Button>
-            <Button style = {styles.button3} onPress = {() => navegation.navigate('EditProduct')}>
-              <Text style={styles.text1}>Edit Product</Text>
             </Button>
         </View>
     )
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
     },
     text:{
         textAlign: 'center',
-        fontSize: 30,
+        fontSize: 15,
         padding: 15
     },
     container:{
@@ -95,5 +99,42 @@ const styles = StyleSheet.create({
 
 });
 
+const createProduct = (Id,Name,Price,Stock,Description,selectedCategory) => {
+    fetch('http://192.168.1.163:8000/crearCategoria', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "id": Id,
+        "nombre": Name,
+        "precio": Price,
+        "stock": Stock,
+        "descripcion": Description})
+    })
+    .then(res => {
+      console.log(res.status);
+      console.log(res.headers);
+      //console.log(res.url);
+      return res.json();
+    })
+    .then(function(result){
+      var result1 = result;
+
+      if(result1.toString(result) === "ok"){
+        Alert.alert("Success","Se ha agregado la categoria");
+      }else{
+        Alert.alert("Error",
+                "La categoria ya existe dentro de la base de datos"
+                );
+      }
+    })
+     .catch(function (error){
+       console.log(error);
+       Alert.alert("Ha ocurrido un error inesperado: "+error);
+     })
+
+
+}
 
 export default CreateProduct;

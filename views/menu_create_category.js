@@ -90,10 +90,7 @@ let createCategory = (name) =>{
         Alert.alert("Error",
                 "La categoria ya existe dentro de la base de datos"
                 );
-
       }
-      //Alert.alert("Ha ocurrido un error inesperado: "+result);
-      
     })
      .catch(function (error){
        console.log(error);

@@ -11,12 +11,11 @@ const EditCategory = () =>{
     const [categories,setCategories] = useState([]);
     const [categoryName, setCategoryName] = useState("");
     const [selectedCategory, setSelectedCategory] = useState();
-
+    const [categoryNameNew , setCategoryNameNew] = useState("");
 
     
     useEffect(() => {
       getCategory();
-      // obtainCategory();
     }, []);
 
 
@@ -44,11 +43,14 @@ const EditCategory = () =>{
                             <Picker.Item key={categoryName} label={categoryName} value={categoryName} />
                         ))}
             </Picker>
+          <View>
+            <TextInput placeholder="El nuevo nombre de la categoria" style = {styles.input} value ={setCategoryName} onChangeText = {(value) => setCategoryNameNew(value)}/>
+            <Button style = {styles.button1} mode="outline" textColor="#FFFFFF" onPress = {() => updateCategory(selectedCategory,categoryNameNew)}>
+              Confirmar
+            </Button>
+          </View>
         </View>
-            // <TextInput placeholder="El nuevo nombre de la categoria" style = {styles.input} value ={setCategoria} onChangeText = {(value) => setNombreCatNuevo(value)}/>
-            // <Button style = {styles.button1} mode="outline" textColor="#FFFFFF" onPress = {() => updateCategory(categoria,nombreCatNuevo)}>
-            //   Confirmar
-            // </Button>
+            
         
     )
 }
@@ -133,5 +135,6 @@ let updateCategory = (name,name1) =>{
         console.log(error);
       }
     )
+    
   };
 export default EditCategory;
