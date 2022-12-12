@@ -1,15 +1,15 @@
-import { Picker } from "@react-native-picker/picker";
-import { ScrollView, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { View } from "react-native";
+import { Button,Text } from "react-native-paper";
 
 const MenuClient = () =>{
+
+    const navigation = useNavigation();
     return(
         <View>
-            <ScrollView>
-
-            </ScrollView>
-            <Picker>
-                <Picker.Item/>
-            </Picker>
+            <Button onPress = {() => navigation.navigate('MenuTable')}>
+                <Text>Go to table</Text>
+            </Button>
         </View>
     )
 }

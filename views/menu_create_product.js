@@ -33,10 +33,6 @@ const CreateProduct = () => {
         .catch(error => console.log(error));
     };
 
-    const obtainCategory = categoryName =>{
-    setCategories(categoryName)
-    }
-
     return(
         <View style = {styles.container}>
             <Text style={styles.text}>Create Product</Text>

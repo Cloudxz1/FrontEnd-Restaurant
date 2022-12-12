@@ -5,6 +5,9 @@ import {Button,Text} from 'react-native-paper'
 
 
 const MenuAdministrator = () =>{
+
+    
+
     const navigation = useNavigation();
     return(
         <View style = {style.container}>
