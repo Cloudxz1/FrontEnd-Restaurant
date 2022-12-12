@@ -1,5 +1,6 @@
-import { FlatList, View,StyleSheet,Text } from "react-native";
+import { FlatList, View,StyleSheet,Text,Button,Alert } from "react-native";
 import axios from "axios";
+import { Picker } from '@react-native-picker/picker';
 import React ,{useEffect,useState} from "react"
 const MenuTable = () =>{
 
@@ -12,6 +13,7 @@ const MenuTable = () =>{
     const [productCategory, setProductCategory] = useState("");
     const [selectedProduct, setSelectedProduct] = useState();
 
+    const [selectedValue, setSelectedValue] = useState("");
 
     const DATA = [
       {
@@ -39,7 +41,27 @@ const MenuTable = () =>{
     );
     
     const renderItem = ({ item }) => (
-        <Item title= {categories.map()}/>
+        <View>
+
+          <Item title={item[0]} /> 
+          <Picker
+          selectedValue={selectedValue}
+          style={{ height: 50, width: 150 }}
+          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
+          <Picker.Item label="1" value="1" />
+          <Picker.Item label="2" value="2" />
+          <Picker.Item label="3" value="3" />
+          <Picker.Item label="4" value="4" />
+          <Picker.Item label="5" value="5" />
+          <Picker.Item label="6" value="6" />
+          </Picker>
+          <Button
+          title="Comprar"
+          onPress={() => Alert.alert('Simple Button pressed')}/>
+
+        </View>  
+
+        
       );
 
     useEffect(() => {
@@ -50,7 +72,7 @@ const MenuTable = () =>{
   
       const getTables = async () => {
         const response = await axios
-          .get(`http://192.168.1.163:8000/getMesa`)
+          .get(`http://192.168.1.13:8000/getMesa`)
           .then(res => {
             setTable(res.data);
             setTableName(res.data);
@@ -61,7 +83,7 @@ const MenuTable = () =>{
 
       const getProduct = async () => {
         const response = await axios
-          .get(`http://192.168.1.163:8000/getProducto`)
+          .get(`http://192.168.1.13:8000/getProducto`)
           .then(res => {
             setProduct(res.data);
             setProductName(res.data);
@@ -76,7 +98,7 @@ return(
         <FlatList
           renderItem={renderItem}
           keyExtractor = {item => item[0]}
-          data = {DATA2}
+          data = {product}
         />
     </View>
 )
