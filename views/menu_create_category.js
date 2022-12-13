@@ -10,7 +10,7 @@ const CreateCategory = () =>{
     const navegation = useNavigation();
     return(
         <View style = {styles.container}>
-            <Text style={styles.text}>CRUD Categoria</Text>
+            <Text style={styles.text}>CRUD Category</Text>
             <TextInput placeholder="Ingrese el nombre de la categoria" style = {styles.input} value ={nombreCat} onChangeText = {(value) => setNombreCat(value)} mode="outlined"/>
             <Button style = {styles.button1} onPress = {() => createCategory(nombreCat)}>
                 <Text style = {styles.text1}>Add Category</Text>

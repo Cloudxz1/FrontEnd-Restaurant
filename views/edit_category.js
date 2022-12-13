@@ -43,7 +43,7 @@ const EditCategory = () =>{
                         ))}
             </Picker>
           <View>
-            <TextInput placeholder="El nuevo nombre de la categoria" style = {styles.input} value ={setCategoryName} onChangeText = {(value) => setCategoryNameNew(value)}/>
+            <TextInput placeholder="new name of the category" style = {styles.input} value ={setCategoryName} onChangeText = {(value) => setCategoryNameNew(value)}/>
             <Button style = {styles.button1} mode="outline" textColor="#FFFFFF" onPress = {() => updateCategory(selectedCategory,categoryNameNew)}>
               Confirmar
             </Button>

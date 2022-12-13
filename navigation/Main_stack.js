@@ -8,6 +8,7 @@ import EditCategory from '../views/edit_category';
 import MenuClient from '../views/client_view';
 import CreateProduct from '../views/menu_create_product'
 import MenuTable from '../views/menu_order_product';
+import CreateTable from '../views/menu_create_table';
 
 const stack = createNativeStackNavigator();
 
@@ -28,7 +29,7 @@ const MainStack = () =>{
                 component={MenuAdministrator}
                 />
                 <stack.Screen
-                name = 'CrearCategoria'
+                name = 'CreateCategory'
                 component={CreateCategory}
                 />
                 <stack.Screen
@@ -42,6 +43,10 @@ const MainStack = () =>{
                 <stack.Screen
                 name = 'MenuProducts'
                 component={MenuTable}
+                />
+                <stack.Screen
+                name = 'CreateTable'
+                component={CreateTable}
                 />
             </stack.Navigator>
         </NavigationContainer>

@@ -39,7 +39,7 @@ const CreateProduct = () => {
             <TextInput placeholder="enter the product id" style = {styles.input} value ={productId} onChangeText = {(value) => setproductId(value)} mode="outlined"/>
             <TextInput placeholder="enter the name" style = {styles.input} value ={productName} onChangeText = {(value) => setProductName(value)} mode="outlined"/>
             <TextInput placeholder="enter the price" style = {styles.input} value ={productPrice} onChangeText = {(value) => setproductPrice(value)} mode="outlined" keyboardType="numeric"/>
-            <TextInput placeholder="enter the stock" style = {styles.input} value ={productStock} onChangeText = {(value) => setproductStock(value)} mode="outlined"/>
+            <TextInput placeholder="enter the stock" style = {styles.input} value ={productStock} onChangeText = {(value) => setproductStock(value)} mode="outlined" keyboardType="numeric"/>
             <TextInput placeholder="enter the description" style = {styles.input} value ={productDescription} onChangeText = {(value) => setproductDescription(value)} mode="outlined" numberOfLines={5}/>
             <Picker selectedValue={selectedCategory} onValueChange={(itemValue) =>
                               setSelectedCategory(itemValue)}>
@@ -91,8 +91,6 @@ const styles = StyleSheet.create({
     text1:{
         color:'#FFFFFF'
     }
-
-
 });
 
 const createProduct = (Id,Name,Price,Stock,Description,category) => {
@@ -112,23 +110,22 @@ const createProduct = (Id,Name,Price,Stock,Description,category) => {
     .then(res => {
       console.log(res.status);
       console.log(res.headers);
-      //console.log(res.url);
       return res.json();
     })
     .then(function(result){
       var result1 = result;
 
       if(result1.toString(result) === "ok"){
-        Alert.alert("Success","Se ha agregado el producto");
+        Alert.alert("Success","Product has been added");
       }else{
         Alert.alert("Error",
-                "El producto ya existe dentro de la base de datos"
+                "The product already exists"
                 );
       }
     })
      .catch(function (error){
        console.log(error);
-       Alert.alert("Ha ocurrido un error inesperado: "+error);
+       Alert.alert("An unexpected error has occurred: "+error);
      })
 
 

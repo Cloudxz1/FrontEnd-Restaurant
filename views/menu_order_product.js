@@ -44,7 +44,7 @@ const MenuTable = () =>{
     useEffect(() => {
         getTables();
         getProduct();
-      }, []);
+    }, []);
   
   
       const getTables = async () => {
