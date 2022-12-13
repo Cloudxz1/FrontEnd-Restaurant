@@ -48,7 +48,7 @@ const CreateProduct = () => {
                                 <Picker.Item key={categoryName} label={categoryName} value={categoryName} />
                             ))}
             </Picker>
-            <Button style = {styles.button1} onPress = {() => createProduct(productId,productName,productPrice,productStock,productDescription,selectedCategory)}>
+            <Button style = {styles.button1} onPress = {() => createProduct(productId,productName,productPrice,productStock,productDescription,selectedCategory)} mode="contained-tonal">
                 <Text style = {styles.text1}>Add Product</Text>
             </Button>
         </View>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     },
     text:{
         textAlign: 'center',
-        fontSize: 15,
+        fontSize: 20,
         padding: 15
     },
     container:{

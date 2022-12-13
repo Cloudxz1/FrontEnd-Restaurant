@@ -15,10 +15,10 @@ const CreateCategory = () =>{
             <Button style = {styles.button1} onPress = {() => createCategory(nombreCat)}>
                 <Text style = {styles.text1}>Add Category</Text>
             </Button>
-            <Button style = {styles.button2} value ={nombreCat} onChangeText = {(value) => setNombreCat(value)} onPress = {() => deleteCategory(nombreCat)}>
+            <Button style = {styles.button2} value ={nombreCat} onChangeText = {(value) => setNombreCat(value)} onPress = {() => deleteCategory(nombreCat)} mode="contained-tonal">
               <Text style = {styles.text1}>Delete Category</Text>
             </Button>
-            <Button style = {styles.button3} onPress = {() => navegation.navigate('EditCategory')}>
+            <Button style = {styles.button3} onPress = {() => navegation.navigate('EditCategory')} mode="contained-tonal">
               <Text style={styles.text1}>Edit Category</Text>
             </Button>
         </View>
@@ -85,16 +85,16 @@ let createCategory = (name) =>{
       var result1 = result;
 
       if(result1.toString(result) === "ok"){
-        Alert.alert("Success","Se ha agregado la categoria");
+        Alert.alert("Success","category has been added");
       }else{
         Alert.alert("Error",
-                "La categoria ya existe dentro de la base de datos"
+                "The category already exists"
                 );
       }
     })
      .catch(function (error){
        console.log(error);
-       Alert.alert("Ha ocurrido un error inesperado: "+error);
+       Alert.alert("An unexpected error has occurred:"+error);
      })
   }
   let deleteCategory = (name) =>{
@@ -116,10 +116,10 @@ let createCategory = (name) =>{
       var result1 = result;
 
       if(result1.toString(result) === "ok"){
-        Alert.alert("Success","Se ha eliminado la categoria");
+        Alert.alert("Success","Category has been removed");
       }else{
         Alert.alert("Error",
-                "La categoria no existe dentro de la base de datos"
+                    "The category does not exist"
                 );
 
       }
@@ -127,7 +127,7 @@ let createCategory = (name) =>{
     })
     .catch(function (error){
       console.log(error);
-      Alert.alert("Ha ocurrido un error inesperado: "+error);
+      Alert.alert("An unexpected error has occurred:"+error);
     })
   };
 

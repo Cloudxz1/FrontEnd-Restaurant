@@ -10,7 +10,7 @@ const CreateTable = () => {
     return(
         <View style = {style.container}>
             <TextInput style = {style.input} placeholder="Id Table" value ={table} onChangeText = {(value) => setTable(value)} mode="outlined"/>
-            <Button style ={style.button} onPress={() => createTable(table)}>
+            <Button style ={style.button} onPress={() => createTable(table)} mode="contained-tonal">
                 <Text style = {style.text}>
                     Confirm
                 </Text>
