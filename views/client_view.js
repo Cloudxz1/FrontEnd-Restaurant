@@ -7,8 +7,8 @@ const MenuClient = () =>{
     const navigation = useNavigation();
     return(
         <View>
-            <Button onPress = {() => navigation.navigate('MenuTable')}>
-                <Text>Go to table</Text>
+            <Button onPress = {() => navigation.navigate('MenuProducts')}>
+                <Text>Make an order</Text>
             </Button>
         </View>
     )

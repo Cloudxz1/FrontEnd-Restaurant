@@ -7,7 +7,6 @@ import axios from 'axios'
 
 const EditCategory = () =>{
 
-    const url = "http://192.168.1.163:8000/getCategoria";
     const [categories,setCategories] = useState([]);
     const [categoryName, setCategoryName] = useState("");
     const [selectedCategory, setSelectedCategory] = useState();

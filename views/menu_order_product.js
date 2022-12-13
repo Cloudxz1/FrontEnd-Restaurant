@@ -1,7 +1,9 @@
-import { FlatList, View,StyleSheet,Text,Button,Alert } from "react-native";
+import { FlatList, View,StyleSheet,Text,Button,Alert, ScrollView } from "react-native";
 import axios from "axios";
 import { Picker } from '@react-native-picker/picker';
 import React ,{useEffect,useState} from "react"
+import { useNavigation } from "@react-navigation/native";
+
 const MenuTable = () =>{
 
     const [table,setTable] = useState([]);
@@ -12,23 +14,9 @@ const MenuTable = () =>{
     const [productPrice,setProductPrice] = useState([]);
     const [productCategory, setProductCategory] = useState("");
     const [selectedProduct, setSelectedProduct] = useState();
-
     const [selectedValue, setSelectedValue] = useState("");
 
-    const DATA = [
-      {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First Item',
-      },
-      {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second Item',
-      },
-      {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-    ];
+    const navigation =  useNavigation();
 
     const DATA2 = [
       product
@@ -42,23 +30,12 @@ const MenuTable = () =>{
     
     const renderItem = ({ item }) => (
         <View>
-
+          <ScrollView>
           <Item title={item[0]} /> 
-          <Picker
-          selectedValue={selectedValue}
-          style={{ height: 50, width: 150 }}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
-          <Picker.Item label="1" value="1" />
-          <Picker.Item label="2" value="2" />
-          <Picker.Item label="3" value="3" />
-          <Picker.Item label="4" value="4" />
-          <Picker.Item label="5" value="5" />
-          <Picker.Item label="6" value="6" />
-          </Picker>
           <Button
           title="Comprar"
           onPress={() => Alert.alert('Simple Button pressed')}/>
-
+          </ScrollView>
         </View>  
 
         
@@ -72,7 +49,7 @@ const MenuTable = () =>{
   
       const getTables = async () => {
         const response = await axios
-          .get(`http://192.168.1.13:8000/getMesa`)
+          .get(`http://192.168.1.163:8000/getMesa`)
           .then(res => {
             setTable(res.data);
             setTableName(res.data);
@@ -83,7 +60,7 @@ const MenuTable = () =>{
 
       const getProduct = async () => {
         const response = await axios
-          .get(`http://192.168.1.13:8000/getProducto`)
+          .get(`http://192.168.1.163:8000/getProducto`)
           .then(res => {
             setProduct(res.data);
             setProductName(res.data);
