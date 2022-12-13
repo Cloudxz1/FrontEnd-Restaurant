@@ -4,3 +4,6 @@ Bienvenido Usuario
 
 ### npm install #Para instalar las dependencias de la aplicación
 ### npm run android o npm run ios #Dependiendo de que plataforma utilice 
+
+
+## Aplicación realizada por Vanesa Briones - Nicolas Sanchez
