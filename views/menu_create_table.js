@@ -20,7 +20,7 @@ const CreateTable = () => {
 }
 let createTable = (name) =>{
 
-    fetch('http://192.168.1.163:8000/crearMesa', {
+    fetch('http://10.12.8.198:8000/crearMesa', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

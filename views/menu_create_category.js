@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 
 let createCategory = (name) =>{
 
-    fetch('http://192.168.1.163:8000/crearCategoria', {
+    fetch('http://10.12.8.198:8000/crearCategoria', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -99,7 +99,7 @@ let createCategory = (name) =>{
   }
   let deleteCategory = (name) =>{
 
-    fetch(`http://192.168.1.163:8000/eliminarCategoria`, {
+    fetch(`http://10.12.8.198:8000/eliminarCategoria`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

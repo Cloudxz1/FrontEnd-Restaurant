@@ -16,48 +16,10 @@ const MenuTable = () =>{
     const [productCategory, setProductCategory] = useState("");
     const [selectedProduct, setSelectedProduct] = useState();
     const [selectedValue, setSelectedValue] = useState("");
+    
 
     const navigation =  useNavigation();
-
-    const createOrder = (Id,Name,Price,Stock,Description,category) => {
-      fetch('http://192.168.1.163:8000/crearPedido', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "id": Id,
-          "nombre": Name,
-          "precio": Price,
-          "stock": Stock,
-          "descripcion": Description,
-          "categoria": category})
-      })
-      .then(res => {
-        console.log(res.status);
-        console.log(res.headers);
-        return res.json();
-      })
-      .then(function(result){
-        var result1 = result;
-  
-        if(result1.toString(result) === "ok"){
-          Alert.alert("Success","Order has been added");
-        }else{
-          Alert.alert("Error",
-                  "The order already exists"
-                  );
-        }
-      })
-       .catch(function (error){
-         console.log(error);
-         Alert.alert("An unexpected error has occurred: "+error);
-       })
-    }
-    const DATA2 = [
-      product
-
-    ];
+    
     const Item = ({ title }) => (
       <View style={styles.item}>
         <Text style={styles.title}>{title}</Text>
@@ -67,8 +29,20 @@ const MenuTable = () =>{
     const renderItem = ({ item }) => (
         <View>
           <ScrollView>
-          <Item title={item[0]} /> 
-          <Button style = {styles.button} >
+          <Item title={item[0] +"\n "+"precio:" + item[2]}/> 
+          <Picker
+          selectedValue={selectedValue}
+          style={{ height: 50, width: 150 }}
+          onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+        >
+          <Picker.Item label="1" value="1" />
+          <Picker.Item label="2" value="2" />
+          <Picker.Item label="3" value="3" />
+          <Picker.Item label="4" value="4" />
+          <Picker.Item label="5" value="5" />
+          <Picker.Item label="6" value="6" />
+          </Picker>
+          <Button style = {styles.button} onPress ={()=>createOrder(item[2],"1",item[1],item[0],1)} >
             <Text style = {styles.text}>
                 Buy
             </Text>
@@ -87,7 +61,7 @@ const MenuTable = () =>{
   
       const getTables = async () => {
         const response = await axios
-          .get(`http://192.168.1.163:8000/getMesa`)
+          .get(`http://10.12.8.198:8000/getMesa`)
           .then(res => {
             setTable(res.data);
             setTableName(res.data);
@@ -98,7 +72,7 @@ const MenuTable = () =>{
 
       const getProduct = async () => {
         const response = await axios
-          .get(`http://192.168.1.163:8000/getProducto`)
+          .get(`http://10.12.8.198:8000/getProducto`)
           .then(res => {
             setProduct(res.data);
             setProductName(res.data);
@@ -108,8 +82,51 @@ const MenuTable = () =>{
           })
           .catch(error => console.log(error));
       };
+      const createOrder = (totalPagar,mesa,idProducto,nombreProducto,cantidadProducto) => {
+        fetch('http://10.12.8.198:8000/crearPedido', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "totalPagar": totalPagar,
+            "horaEstimada": " ",
+            "mesa": mesa,
+            "idProducto": idProducto,
+            "nombreProducto": nombreProducto,
+            "cantidadProducto": cantidadProducto})
+        })
+        .then(res => {
+          console.log(res.status);
+          console.log(res.headers);
+          return res.json();
+        })
+        .then(function(result){
+          var result1 = result;
+
+          if(result1.toString(result) === "ok"){
+            Alert.alert("Success","Order has been added");
+          }else{
+            Alert.alert("Error",
+                    "The order already exists"
+            );
+          }
+        })
+        .catch(function (error){
+          console.log(error);
+          Alert.alert("An unexpected error has occurred: "+error);
+        })
+      }
 return(
     <View>
+      <Text style={styles.title}>Select the table</Text>
+        <Picker selectedValue={selectedTable} onValueChange={(itemValue) =>
+                              selectedTable(itemValue)}>
+                        <Picker.Item label="Select a table" value ={tableName} onChangeText = {(value) => setSelectedTable(value)} />
+                        {table.map(tableName => (
+                            <Picker.Item key={tableName} label={tableName} value={tableName} />
+                        ))}
+        </Picker>
         <FlatList
           renderItem={renderItem}
           keyExtractor = {item => item[0]}
@@ -118,7 +135,6 @@ return(
     </View>
 )
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -134,6 +150,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color:'#FFFFFF'
+  },
+  title:{
+    textAlign: 'center',
+    fontSize: 20,
+    padding: 15
   },
   button:{
     justifyContent: 'center',

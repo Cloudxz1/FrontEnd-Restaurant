@@ -1,6 +1,6 @@
 import { Picker } from '@react-native-picker/picker';
 import React, {useEffect, useState} from 'react'
-import { View,StyleSheet} from 'react-native'
+import { View,StyleSheet,Alert} from 'react-native'
 import {Button,TextInput,Text, IconButton} from 'react-native-paper'
 import axios from 'axios'
 
@@ -20,7 +20,7 @@ const EditCategory = () =>{
 
     const getCategory = async () => {
       const response = await axios
-        .get(`http://192.168.1.163:8000/getCategoria`)
+        .get(`http://10.12.8.198:8000/getCategoria`)
         .then(res => {
           setCategories(res.data);
           setCategoryName(res.data);
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 
 let updateCategory = (name,name1) =>{
 
-    fetch('http://192.168.1.163:8000/editarCategoria', {
+    fetch('http://10.12.8.198:8000/editarCategoria', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -126,14 +126,22 @@ let updateCategory = (name,name1) =>{
       console.log(res.headers);
       return res.json();
     })
-    .then(
-      (result) => {
-        console.log(result);
-      },
-      (error) => {
-        console.log(error);
+    .then(function(result){
+      var result1 = result;
+
+      if(result1.toString(result) === "ok"){
+        Alert.alert("Success","The category has been updated");
+      }else{
+        Alert.alert("Error",
+                    "The category does not exist or you did not select a category to rename"
+                );
+
       }
-    )
-    
+     
+    })
+    .catch(function (error){
+      console.log(error);
+      Alert.alert("An unexpected error has occurred:"+error);
+    })
   };
 export default EditCategory;

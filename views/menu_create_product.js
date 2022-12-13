@@ -7,7 +7,6 @@ import axios from "axios";
 //import { launchImageLibrary } from 'react-native-image-picker'
 const CreateProduct = () => {
 
-    const [productId, setproductId] = useState("");
     const [productName, setProductName] = useState("");
     const [productDescription, setproductDescription] = useState("");
     const [productPrice, setproductPrice] = useState("");
@@ -24,7 +23,7 @@ const CreateProduct = () => {
 
     const getCategory = async () => {
     const response = await axios
-        .get(`http://192.168.1.163:8000/getCategoria`)
+        .get(`http://10.12.8.198:8000/getCategoria`)
         .then(res => {
         setCategories(res.data);
         setCategoryName(res.data);
@@ -36,7 +35,6 @@ const CreateProduct = () => {
     return(
         <View style = {styles.container}>
             <Text style={styles.text}>Create Product</Text>
-            <TextInput placeholder="enter the product id" style = {styles.input} value ={productId} onChangeText = {(value) => setproductId(value)} mode="outlined"/>
             <TextInput placeholder="enter the name" style = {styles.input} value ={productName} onChangeText = {(value) => setProductName(value)} mode="outlined"/>
             <TextInput placeholder="enter the price" style = {styles.input} value ={productPrice} onChangeText = {(value) => setproductPrice(value)} mode="outlined" keyboardType="numeric"/>
             <TextInput placeholder="enter the stock" style = {styles.input} value ={productStock} onChangeText = {(value) => setproductStock(value)} mode="outlined" keyboardType="numeric"/>
@@ -48,7 +46,7 @@ const CreateProduct = () => {
                                 <Picker.Item key={categoryName} label={categoryName} value={categoryName} />
                             ))}
             </Picker>
-            <Button style = {styles.button1} onPress = {() => createProduct(productId,productName,productPrice,productStock,productDescription,selectedCategory)} mode="contained-tonal">
+            <Button style = {styles.button1} onPress = {() => createProduct(productName,productPrice,productStock,productDescription,selectedCategory)} mode="contained-tonal">
                 <Text style = {styles.text1}>Add Product</Text>
             </Button>
         </View>
@@ -93,14 +91,13 @@ const styles = StyleSheet.create({
     }
 });
 
-const createProduct = (Id,Name,Price,Stock,Description,category) => {
-    fetch('http://192.168.1.163:8000/crearProducto', {
+const createProduct = (Name,Price,Stock,Description,category) => {
+    fetch('http://10.12.8.198:8000/crearProducto', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "id": Id,
         "nombre": Name,
         "precio": Price,
         "stock": Stock,
